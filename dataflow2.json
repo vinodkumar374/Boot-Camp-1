@@ -1,0 +1,431 @@
+{
+    "name": "dataflow2",
+    "properties": {
+        "type": "MappingDataFlow",
+        "typeProperties": {
+            "sources": [
+                {
+                    "dataset": {
+                        "referenceName": "Json7",
+                        "type": "DatasetReference"
+                    },
+                    "name": "source1"
+                },
+                {
+                    "dataset": {
+                        "referenceName": "DelimitedText3",
+                        "type": "DatasetReference"
+                    },
+                    "name": "source2"
+                },
+                {
+                    "dataset": {
+                        "referenceName": "Ds_customers_source",
+                        "type": "DatasetReference"
+                    },
+                    "name": "source3"
+                },
+                {
+                    "dataset": {
+                        "referenceName": "sales_fact",
+                        "type": "DatasetReference"
+                    },
+                    "name": "source4"
+                },
+                {
+                    "dataset": {
+                        "referenceName": "customer_table",
+                        "type": "DatasetReference"
+                    },
+                    "name": "source5"
+                },
+                {
+                    "dataset": {
+                        "referenceName": "products_table",
+                        "type": "DatasetReference"
+                    },
+                    "name": "source6"
+                }
+            ],
+            "sinks": [
+                {
+                    "dataset": {
+                        "referenceName": "json_sink",
+                        "type": "DatasetReference"
+                    },
+                    "name": "sink1",
+                    "rejectedDataLinkedService": {
+                        "referenceName": "linkedService1",
+                        "type": "LinkedServiceReference"
+                    }
+                },
+                {
+                    "dataset": {
+                        "referenceName": "Ds_products_csv",
+                        "type": "DatasetReference"
+                    },
+                    "name": "sink2",
+                    "rejectedDataLinkedService": {
+                        "referenceName": "linkedService1",
+                        "type": "LinkedServiceReference"
+                    }
+                },
+                {
+                    "dataset": {
+                        "referenceName": "Ds_customers_sink",
+                        "type": "DatasetReference"
+                    },
+                    "name": "sink3",
+                    "rejectedDataLinkedService": {
+                        "referenceName": "linkedService1",
+                        "type": "LinkedServiceReference"
+                    }
+                },
+                {
+                    "dataset": {
+                        "referenceName": "AzureSqlTable1",
+                        "type": "DatasetReference"
+                    },
+                    "name": "sink4",
+                    "rejectedDataLinkedService": {
+                        "referenceName": "linkedService1",
+                        "type": "LinkedServiceReference"
+                    }
+                }
+            ],
+            "transformations": [
+                {
+                    "name": "split1"
+                },
+                {
+                    "name": "select1"
+                },
+                {
+                    "name": "select2"
+                },
+                {
+                    "name": "derivedColumn1"
+                },
+                {
+                    "name": "derivedColumn2"
+                },
+                {
+                    "name": "sort1"
+                },
+                {
+                    "name": "sort2"
+                },
+                {
+                    "name": "union1"
+                },
+                {
+                    "name": "filter1"
+                },
+                {
+                    "name": "derivedColumn3"
+                },
+                {
+                    "name": "aggregate1"
+                },
+                {
+                    "name": "join1"
+                },
+                {
+                    "name": "select3"
+                },
+                {
+                    "name": "derivedColumn4"
+                },
+                {
+                    "name": "derivedColumn5"
+                },
+                {
+                    "name": "filter2"
+                },
+                {
+                    "name": "filter3"
+                },
+                {
+                    "name": "sort3"
+                },
+                {
+                    "name": "derivedColumn6"
+                },
+                {
+                    "name": "join2"
+                },
+                {
+                    "name": "select4"
+                },
+                {
+                    "name": "join3"
+                },
+                {
+                    "name": "select5"
+                }
+            ],
+            "scriptLines": [
+                "source(output(",
+                "          CustomerID as integer,",
+                "          ProductID as integer,",
+                "          Quantity as integer,",
+                "          SaleDate as date,",
+                "          SaleID as integer,",
+                "          TotalAmount as integer,",
+                "          amount as float,",
+                "          category as integer,",
+                "          date as date,",
+                "          id as integer,",
+                "          value1 as integer,",
+                "          value2 as integer,",
+                "          value3 as integer",
+                "     ),",
+                "     allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     ignoreNoFilesFound: false,",
+                "     documentForm: 'arrayOfDocuments') ~> source1",
+                "source(output(",
+                "          ProductID as integer,",
+                "          ProductName as string,",
+                "          Category as string,",
+                "          Price as integer,",
+                "          StockQuantity as integer",
+                "     ),",
+                "     allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     ignoreNoFilesFound: false) ~> source2",
+                "source(output(",
+                "          CustomerID as integer,",
+                "          CustomerName as string,",
+                "          Email as string,",
+                "          Phone as string,",
+                "          City as string,",
+                "          Country as string",
+                "     ),",
+                "     allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     ignoreNoFilesFound: false) ~> source3",
+                "source(output(",
+                "          CustomerID as string,",
+                "          ProductID as string,",
+                "          Quantity as string,",
+                "          SaleDate as string,",
+                "          SaleID as string,",
+                "          TotalAmount as string,",
+                "          Amount as string,",
+                "          Category as string,",
+                "          Date as string,",
+                "          ID as string,",
+                "          Itemvalue1 as string,",
+                "          Itemvalue2 as string,",
+                "          Itemvalue3 as string",
+                "     ),",
+                "     allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     ignoreNoFilesFound: false) ~> source4",
+                "source(output(",
+                "          CustomerID as string,",
+                "          CustomerName as string,",
+                "          Email as string,",
+                "          Phone as string,",
+                "          City as string,",
+                "          Country as string",
+                "     ),",
+                "     allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     ignoreNoFilesFound: false) ~> source5",
+                "source(output(",
+                "          ProductID as string,",
+                "          ProductName as string,",
+                "          StockQuantity as string,",
+                "          Category as string,",
+                "          TotalPrice as string",
+                "     ),",
+                "     allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     ignoreNoFilesFound: false) ~> source6",
+                "source1 split(!isNull(SaleID),",
+                "     !isNull(id),",
+                "     disjoint: false) ~> split1@(salesiddatset, iddatset)",
+                "split1@salesiddatset select(mapColumn(",
+                "          CustomerID,",
+                "          ProductID,",
+                "          Quantity,",
+                "          SaleDate,",
+                "          SaleID,",
+                "          TotalAmount",
+                "     ),",
+                "     skipDuplicateMapInputs: true,",
+                "     skipDuplicateMapOutputs: true) ~> select1",
+                "split1@iddatset select(mapColumn(",
+                "          Amount = amount,",
+                "          Category = category,",
+                "          Date = date,",
+                "          ID = id,",
+                "          Itemvalue1 = value1,",
+                "          Itemvalue2 = value2,",
+                "          Itemvalue3 = value3",
+                "     ),",
+                "     skipDuplicateMapInputs: true,",
+                "     skipDuplicateMapOutputs: true) ~> select2",
+                "select1 derive(CustomerID = iif(isNull(CustomerID), 987, CustomerID),",
+                "          ProductID = iif(isNull(ProductID), 87, ProductID),",
+                "          Quantity = iif(isNull(Quantity), 7, Quantity),",
+                "          SaleDate = iif(isNull(SaleDate), toDate('2024-01-01', 'yyyy-MM-dd'), SaleDate),",
+                "          SaleID = iif(isNull(SaleID), 12, SaleID),",
+                "          TotalAmount = iif(isNull(TotalAmount), 4538, TotalAmount)) ~> derivedColumn1",
+                "select2 derive(ID = iif(isNull(ID), 36, ID),",
+                "          Category = iif(isNull(Category), 6, Category),",
+                "          Itemvalue1 = iif(isNull(Itemvalue1), 35, Itemvalue1),",
+                "          Itemvalue2 = iif(isNull(Itemvalue2), 26, Itemvalue2),",
+                "          Itemvalue3 = iif(isNull(Itemvalue3), 46, Itemvalue3),",
+                "          Date = iif(isNull(Date), toDate('2024-03-09', 'yyyy-MM-dd'), Date),",
+                "          Amount = iif(isNull(Amount), 136.0, Amount)) ~> derivedColumn2",
+                "derivedColumn1 sort(asc(SaleID, true)) ~> sort1",
+                "derivedColumn2 sort(desc(ID, true)) ~> sort2",
+                "sort1, sort2 union(byName: true)~> union1",
+                "source2 filter(!isNull(ProductID),",
+                "     partitionBy('hash', 1)) ~> filter1",
+                "filter1 derive(Category = iif(isNull(Category), \"Electronics\", Category),",
+                "          StockQuantity = iif(isNull(StockQuantity), 10, StockQuantity),",
+                "          Price = iif(isNull(Price), 156, Price)) ~> derivedColumn3",
+                "derivedColumn3 aggregate(groupBy(Category),",
+                "     Price = avg(Price)) ~> aggregate1",
+                "derivedColumn3, aggregate1 join(derivedColumn3@Category == aggregate1@Category,",
+                "     joinType:'outer',",
+                "     matchType:'exact',",
+                "     ignoreSpaces: false,",
+                "     broadcast: 'auto')~> join1",
+                "join1 select(mapColumn(",
+                "          ProductID,",
+                "          ProductName,",
+                "          StockQuantity,",
+                "          Category = aggregate1@Category,",
+                "          TotalPrice = aggregate1@Price",
+                "     ),",
+                "     partitionBy('hash', 1),",
+                "     skipDuplicateMapInputs: true,",
+                "     skipDuplicateMapOutputs: true) ~> select3",
+                "select3 derive(TotalPrice = round(TotalPrice, 2)) ~> derivedColumn4",
+                "source3 derive(Email = iif(isNull(Email), \"Jagan@gmail.com\", Email),",
+                "          City = iif(isNull(City), \"Texas\", City),",
+                "          Country = iif(isNull(Country), \"USA\", Country),",
+                "          Phone = iif(isNull(Phone), \"9057645724\", Phone)) ~> derivedColumn5",
+                "derivedColumn5 filter(!isNull(CustomerID)) ~> filter2",
+                "filter2 filter(!isNull(\"CustomerName\")) ~> filter3",
+                "filter3 sort(asc(CustomerID, true)) ~> sort3",
+                "union1 derive(Amount = round(Amount, 2)) ~> derivedColumn6",
+                "source4, source5 join(source4@CustomerID == source5@CustomerID,",
+                "     joinType:'inner',",
+                "     matchType:'exact',",
+                "     ignoreSpaces: false,",
+                "     partitionBy('hash', 1),",
+                "     broadcast: 'auto')~> join2",
+                "join2 select(mapColumn(",
+                "          CustomerID = source4@CustomerID,",
+                "          ProductID,",
+                "          Quantity,",
+                "          SaleDate,",
+                "          SaleID,",
+                "          TotalAmount,",
+                "          CustomerID = source5@CustomerID,",
+                "          CustomerName,",
+                "          Email,",
+                "          Phone,",
+                "          City,",
+                "          Country",
+                "     ),",
+                "     skipDuplicateMapInputs: true,",
+                "     skipDuplicateMapOutputs: true) ~> select4",
+                "select4, source6 join(select4@ProductID == source6@ProductID,",
+                "     joinType:'inner',",
+                "     matchType:'exact',",
+                "     ignoreSpaces: false,",
+                "     broadcast: 'auto')~> join3",
+                "join3 select(mapColumn(",
+                "          SaleID,",
+                "          CustomerID,",
+                "          ProductID = source6@ProductID,",
+                "          CustomerName,",
+                "          ProductName,",
+                "          Email,",
+                "          Phone,",
+                "          City,",
+                "          Country,",
+                "          SaleDate,",
+                "          Quantity,",
+                "          Category,",
+                "          StockQuantity,",
+                "          TotalAmount,",
+                "          TotalPrice",
+                "     ),",
+                "     skipDuplicateMapInputs: true,",
+                "     skipDuplicateMapOutputs: true) ~> select5",
+                "derivedColumn6 sink(allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     input(",
+                "          CustomerID as string,",
+                "          CustomerName as string,",
+                "          Email as string,",
+                "          Phone as string,",
+                "          City as string,",
+                "          Country as string",
+                "     ),",
+                "     partitionFileNames:['sales.csv'],",
+                "     umask: 0022,",
+                "     preCommands: [],",
+                "     postCommands: [],",
+                "     skipDuplicateMapInputs: true,",
+                "     skipDuplicateMapOutputs: true,",
+                "     partitionBy('hash', 1)) ~> sink1",
+                "derivedColumn4 sink(allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     input(",
+                "          CustomerID as string,",
+                "          CustomerName as string,",
+                "          Email as string,",
+                "          Phone as string,",
+                "          City as string,",
+                "          Country as string",
+                "     ),",
+                "     partitionFileNames:['Products.csv'],",
+                "     umask: 0022,",
+                "     preCommands: [],",
+                "     postCommands: [],",
+                "     skipDuplicateMapInputs: true,",
+                "     skipDuplicateMapOutputs: true,",
+                "     partitionBy('hash', 1)) ~> sink2",
+                "sort3 sink(allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     input(",
+                "          CustomerID as string,",
+                "          CustomerName as string,",
+                "          Email as string,",
+                "          Phone as string,",
+                "          City as string,",
+                "          Country as string",
+                "     ),",
+                "     partitionFileNames:['Customer.csv'],",
+                "     umask: 0022,",
+                "     preCommands: [],",
+                "     postCommands: [],",
+                "     skipDuplicateMapInputs: true,",
+                "     skipDuplicateMapOutputs: true,",
+                "     partitionBy('hash', 1)) ~> sink3",
+                "select5 sink(allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     deletable:false,",
+                "     insertable:true,",
+                "     updateable:false,",
+                "     upsertable:false,",
+                "     format: 'table',",
+                "     skipDuplicateMapInputs: true,",
+                "     skipDuplicateMapOutputs: true,",
+                "     errorHandlingOption: 'stopOnFirstError',",
+                "     partitionBy('hash', 1),",
+                "     preCommands: [],",
+                "     postCommands: []) ~> sink4"
+            ]
+        }
+    }
+}
